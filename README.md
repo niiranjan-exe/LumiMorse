@@ -1,4 +1,5 @@
 <div align="center">
+⭐ If this project sparked something in you, drop a star!⭐
 
 ```
 ██╗      ██╗   ██╗███╗   ███╗██╗    ███╗   ███╗ ██████╗ ██████╗ ███████╗███████╗
@@ -9,116 +10,234 @@
 ╚══════╝  ╚═════╝ ╚═╝     ╚═╝╚═╝    ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
 ```
 
-**LumiMorse — Where light speaks in code.**
+### ◈ &nbsp; L U M I &nbsp; M O R S E &nbsp; · &nbsp; A R D U I N O &nbsp; ◈
 
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square&logo=python)](https://www.python.org/)
-[![Arduino](https://img.shields.io/badge/Arduino-Compatible-teal?style=flat-square&logo=arduino)](https://www.arduino.cc/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-[![Author](https://img.shields.io/badge/Author-Niiranjan%20P-orange?style=flat-square&logo=github)](https://github.com/niiranjan-exe)
+<br/>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.8%2B-38bdf8?style=for-the-badge&logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Arduino-Compatible-22d3ee?style=for-the-badge&logo=arduino&logoColor=white"/>
+  <img src="https://img.shields.io/badge/CustomTkinter-GUI-a78bfa?style=for-the-badge&logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/PySerial-Bridge-f97316?style=for-the-badge&logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/License-MIT-4ade80?style=for-the-badge"/>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Author-Niiranjan%20P-f472b6?style=for-the-badge&logo=github&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Status-Active-4ade80?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Mac-38bdf8?style=for-the-badge"/>
+</p>
+
+<br/>
+
+> **LumiMorse** is an Arduino-powered optical communication system that encodes text as **Morse code**, fires it across the room as a **laser beam**, and decodes it live on the receiving side using an **LDR sensor** — all displayed inside a futuristic dark-themed Python HUD.
+
+<br/>
+
+```
+[ SENDER GUI ]  ──── USB Serial ────  [ Arduino TX ]  ──── ·−·· ∿∿∿ ────  [ Arduino RX ]  ──── USB Serial ────  [ RECEIVER GUI ]
+   Type message                          Laser blinks                           LDR detects                          Text displayed
+```
 
 </div>
 
 ---
 
-## 📡 What is LumiMorse?
+## 📡 Table of Contents
 
-**LumiMorse** is an Arduino-based optical communication system that transmits text as **Morse code via a laser beam** and decodes it on the receiving end using an **LDR (Light Dependent Resistor) sensor**. The decoded message is displayed in real time through a sleek, dark-themed Python GUI built on `customtkinter`.
-
-It's a full end-to-end wireless communication pipeline — entirely using light.
-
-```
-[ PC / GUI ]  ──── Serial ────  [ Arduino TX ]  ──── Laser ────  [ Arduino RX ]  ──── Serial ────  [ PC / GUI ]
-  Type msg                        Blinks laser                      LDR detects                       Displays text
-```
-
----
-
-## ✨ Features
-
-### 🖥️ Python GUI (`laser_morse_hud.py`)
-- **TX Mode** — Type a message and transmit it as Morse code over laser
-- **RX Mode** — Listens on serial and displays decoded characters in real time
-- **Calibration Mode** — Live LDR bar chart to align your laser and potentiometer
-- **Morse Visualiser** — Animated dot/dash blocks rendered per character
-- **Oscilloscope Panel** — Live animated signal waveform per mode (TX / RX / CAL)
-- **HexRain Sidebar** — Scrolling matrix-style hex background animation
-- **Live Morse Preview** — Real-time Morse preview while composing a TX message
-- **Session Stats** — Tracks TX chars, RX chars, errors, and messages sent
-- **Live Clock** — Real-time clock and date in the sidebar
-- **Export** — Save the system log or received message as `.txt` files
-- **API Key Auth** — Connection gated behind an API key
-
-### ⚡ Arduino Firmware (`Secure_Beam_NAP__1_.ino`)
-- Morse encode and decode tables (A–Z, 0–9)
-- Laser TX with buzzer + LED feedback per symbol
-- Non-blocking LDR receive loop with timing-based dot/dash detection
-- LDR calibration routine with live serial output
-- Serial command protocol (`TX`, `RX`, `CAL`)
+- [About the Project](#-about-the-project)
+- [Screenshots](#-screenshots)
+- [Features](#-features)
+- [Hardware Requirements](#-hardware-requirements)
+- [Pin Configuration](#-pin-configuration)
+- [Morse Timing Reference](#-morse-timing-reference)
+- [Serial Protocol](#-serial-protocol)
+- [Tech Stack](#-tech-stack)
+- [Prerequisites](#-prerequisites)
+- [Installation & Setup](#-installation--setup)
+- [How to Use](#-how-to-use)
+- [GUI Modes & Themes](#-gui-modes--themes)
+- [Project Structure](#-project-structure)
+- [Known Issues & Future Improvements](#-known-issues--future-improvements)
+- [License](#-license)
+- [Author](#-author)
 
 ---
 
-## 🔌 Hardware Requirements
+## <a id="about-the-project"></a>🔭 About the Project
 
-| Component | Quantity | Notes |
-|-----------|----------|-------|
-| Arduino Uno / Nano | 2 | One for TX, one for RX |
+**LumiMorse** (*Lumi* — Latin/Finnish for **light**) is a real-world wireless communication project built entirely on Arduino and Python. The sender side encodes a typed message into International Morse Code and transmits it as timed laser pulses. The receiver side listens via an LDR (Light Dependent Resistor), interprets the pulse durations, decodes each symbol back into text, and streams it live to a GUI.
+
+Key highlights from the codebase:
+
+- The **Python GUI** (`lumi_morse_hud.py`) is built with `customtkinter` and styled with a deep-space dark colour palette — featuring an animated oscilloscope, scrolling hex-rain sidebar, live Morse dot/dash visualiser, and per-mode full UI colour theme switching.
+- The **Arduino firmware** (`LUMI_MORSE_.ino`) handles Morse encoding + decoding, laser control, buzzer + LED feedback, a non-blocking LDR receive loop, and a live calibration routine — all over a simple serial command protocol.
+- A **TX Message Composer** dialog (full-screen, maximised) shows a live Morse preview and symbol count as you type.
+- A dedicated **LDR Calibration panel** renders a live bar chart of 0/1 sensor readings so you can physically align the laser to the LDR.
+
+---
+
+## <a id="screenshots"></a>📸 Screenshots
+
+### 🖥️ Main HUD — System Idle
+> Scrolling hex-rain sidebar, live clock, session stats, oscilloscope panel, and message buffer.
+
+![Idle HUD](assets/screenshots/hud_idle.png)
+
+### 📤 TX Mode — Transmitting
+> Full orange accent theme with Morse dot/dash visualiser, big character display, and real-time progress bar.
+
+![TX Mode](assets/screenshots/hud_tx.png)
+
+### 📥 RX Mode — Receiving
+> Full cyan accent theme with live character decode streaming into the message buffer.
+
+![RX Mode](assets/screenshots/hud_rx.png)
+
+### 🔧 Calibration Mode
+> Purple accent theme with live LDR bar chart showing LASER ON / LASER OFF readings.
+
+![CAL Mode](assets/screenshots/hud_cal.png)
+
+---
+
+## <a id="features"></a>✨ Features
+
+### 🖥️ Python GUI — `lumi_morse_hud.py`
+
+| # | Feature | Description |
+|---|---------|-------------|
+| 1 | **TX Mode** | Full-screen message composer with live Morse preview, char/symbol counter, and `Ctrl+Enter` to transmit |
+| 2 | **RX Mode** | Listens on serial, decodes characters live, updates big char display and message buffer in real time |
+| 3 | **Calibration Mode** | Live LDR bar chart (40 readings × 200ms) — adjust potentiometer to align laser on LDR |
+| 4 | **Morse Visualiser** | Animated dot/dash block renderer, updates per character in both TX and RX |
+| 5 | **Oscilloscope Panel** | Animated signal waveform — colour and amplitude change per active mode |
+| 6 | **HexRain Sidebar** | Scrolling matrix-style hex digit animation layered behind the sidebar controls |
+| 7 | **Per-Mode UI Themes** | Full colour overhaul on every mode switch (TX = orange · RX = cyan · CAL = purple) |
+| 8 | **Session Stats** | Tracks TX chars, RX chars, errors, and messages — live updated every 400ms |
+| 9 | **Live Clock** | Real-time `HH:MM:SS` clock and `YYYY . MM . DD` date in the sidebar |
+| 10 | **Export Log** | Save the full timestamped, colour-tagged system log to a `.txt` file |
+| 11 | **Export Message** | Save the received message buffer to a `.txt` file |
+| 12 | **API Key Auth** | Connection to Arduino is gated behind an API key entry field |
+| 13 | **Port Refresh** | Rescan and refresh available COM ports at runtime with one click |
+
+### ⚡ Arduino Firmware — `LUMI_MORSE_.ino`
+
+| # | Feature | Description |
+|---|---------|-------------|
+| 1 | **Morse Encode** | Full A–Z, 0–9 encode table via `encodeMorse()` |
+| 2 | **Morse Decode** | Full A–Z, 0–9 decode table via `decodeMorse()` |
+| 3 | **Laser TX** | Fires laser + LED + buzzer per dot/dash with correct inter-symbol timing |
+| 4 | **Non-blocking RX Loop** | LDR receive loop uses `millis()` — no `delay()` blocking during reception |
+| 5 | **Auto Gap Detection** | Automatically distinguishes letter gaps (750ms) vs word gaps (1750ms) |
+| 6 | **Calibration Routine** | Streams 40 raw LDR `0/1` readings over serial for the live GUI chart |
+| 7 | **Serial Command Protocol** | Cleanly responds to `TX`, `RX`, and `CAL` commands from the GUI |
+
+---
+
+## <a id="hardware-requirements"></a>🔩 Hardware Requirements
+
+| Component | Qty | Notes |
+|-----------|-----|-------|
+| Arduino Uno / Nano | 2 | One for TX side, one for RX side |
 | Laser Module (5V) | 1 | KY-008 or equivalent |
 | LDR Sensor | 1 | With 10kΩ pull-down resistor |
-| LED (any colour) | 1 | Status indicator |
-| Buzzer (active) | 1 | Audio feedback |
-| Potentiometer | 1 | For LDR threshold tuning |
+| Potentiometer | 1 | For adjusting LDR detection threshold |
+| LED (any colour) | 1 | Visual status indicator per pulse |
+| Active Buzzer | 1 | Audio feedback per dot/dash |
 | Jumper Wires | — | As needed |
-| USB Cables | 2 | One per Arduino |
+| USB Cables | 2 | One per Arduino (serial + power) |
 
 ---
 
-## 📌 Arduino Pin Configuration
+## <a id="pin-configuration"></a>📌 Pin Configuration
 
 ```cpp
-#define LASER_PIN   9    // Laser module output
-#define LDR_PIN     2    // LDR digital input
-#define LED_PIN     13   // Status LED
-#define BUZZER_PIN  3    // Buzzer output
+// ============================================================
+//   L U M I M O R S E   ·   A R D U I N O   P I N   M A P
+// ============================================================
+
+#define LASER_PIN   9    // OUTPUT — Laser module signal pin
+#define LDR_PIN     2    // INPUT  — LDR digital read
+#define LED_PIN     13   // OUTPUT — Status LED per pulse
+#define BUZZER_PIN  3    // OUTPUT — Buzzer audio feedback
 ```
 
 ---
 
-## ⏱️ Morse Timing
+## <a id="morse-timing-reference"></a>⏱️ Morse Timing Reference
 
-| Symbol | Duration |
-|--------|----------|
-| DOT | 250 ms |
-| DASH | 750 ms (DOT × 3) |
-| Inter-symbol gap | 250 ms |
-| Letter gap | 750 ms (DOT × 3) |
-| Word gap | 1750 ms (DOT × 7) |
+| Symbol | Duration | Formula |
+|--------|----------|---------|
+| **DOT** | 250 ms | Base unit |
+| **DASH** | 750 ms | DOT × 3 |
+| **Inter-symbol gap** | 250 ms | DOT × 1 |
+| **Letter gap** | 750 ms | DOT × 3 |
+| **Word gap** | 1750 ms | DOT × 7 |
+
+> The Python GUI mirrors these exact timings locally to animate the progress bar during TX, even before the Arduino confirms `[TX] Done`.
 
 ---
 
-## 📟 Serial Protocol
+## <a id="serial-protocol"></a>📟 Serial Protocol
 
-The Python GUI communicates with the Arduino over serial using plain text commands:
+LumiMorse uses plain-text newline-terminated commands over serial at **9600 baud**.
 
-| GUI → Arduino | Description |
-|---------------|-------------|
-| `TX <message>\n` | Transmit full message as Morse via laser |
-| `RX\n` | Enter receive mode, listen on LDR |
-| `CAL\n` | Run LDR calibration (40 readings × 200ms) |
+### GUI → Arduino
 
-| Arduino → GUI | Description |
-|---------------|-------------|
-| `LASER LINK READY` | Boot handshake |
-| `RX MODE` | Confirmed receive mode |
-| `[TX] Sending...` | TX started |
-| `[TX] Done` | TX complete |
+| Command | Effect |
+|---------|--------|
+| `TX <message>\n` | Encodes and transmits the full message as timed laser pulses |
+| `RX\n` | Puts Arduino into receive mode, begins LDR monitoring |
+| `CAL\n` | Runs calibration — streams 40 LDR readings at 200ms intervals |
+
+### Arduino → GUI
+
+| Message | Meaning |
+|---------|---------|
+| `LASER LINK READY` | Boot handshake — Arduino is online |
+| `RX MODE` | Confirmed receive mode is active |
+| `[TX] Sending...` | Laser transmission started |
+| `[TX] Done` | Laser transmission complete |
 | `CAL MODE - Adjust Pot` | Calibration started |
 | `CAL DONE` | Calibration finished |
-| `0` / `1` | Raw LDR readings during CAL |
-| `<char>` / `<word>` | Decoded Morse output during RX |
+| `0` / `1` | Raw LDR reading during CAL (`0` = laser detected · `1` = dark) |
+| `<char>` / `<word>` | Decoded Morse character streamed live during RX |
 
 ---
 
-## 🚀 Getting Started
+## <a id="tech-stack"></a>🛠️ Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| **Python 3.8+** | Core application language |
+| **customtkinter** | Modern dark-themed GUI framework |
+| **tkinter** | Canvas animations — oscilloscope, Morse bar, hex-rain |
+| **pyserial** | Arduino serial communication bridge |
+| **threading** | Non-blocking serial reader + TX progress animation in parallel |
+| **queue** | Thread-safe message passing from serial thread to GUI thread |
+| **Arduino C++** | Morse encode/decode, laser TX, LDR RX, calibration firmware |
+
+---
+
+## <a id="prerequisites"></a>✅ Prerequisites
+
+Ensure the following are installed before running:
+
+- [Python 3.8+](https://www.python.org/downloads/)
+- [Arduino IDE](https://www.arduino.cc/en/software) — to flash the firmware
+- The following Python packages:
+
+```bash
+pip install customtkinter pyserial
+```
+
+> `tkinter` is bundled with Python by default.
+> On Linux if missing: `sudo apt-get install python3-tk`
+
+---
+
+## <a id="installation--setup"></a>⚙️ Installation & Setup
 
 ### 1. Clone the Repository
 
@@ -133,109 +252,157 @@ cd lumi-morse
 pip install customtkinter pyserial
 ```
 
-> Requires **Python 3.8+**
+### 3. Flash the Arduino Firmware
 
-### 3. Flash the Arduino
-
-1. Open `Secure_Beam_NAP__1_.ino` in the Arduino IDE
-2. Select your board (Uno / Nano) and the correct COM port
-3. Upload the sketch to **both** Arduinos (TX side and RX side)
+1. Open `LUMI_MORSE_.ino` in the **Arduino IDE**
+2. Select your board (`Uno` / `Nano`) under `Tools → Board`
+3. Select the correct COM port under `Tools → Port`
+4. Click **Upload** — repeat for **both** Arduinos (same firmware for TX and RX)
 
 ### 4. Wire the Hardware
 
-**TX Arduino:**
-- Pin 9 → Laser module signal pin
-- Pin 13 → LED (with resistor)
-- Pin 3 → Buzzer
+**TX Arduino — Sender Side**
+```
+Pin  9  ──→  Laser module signal pin
+Pin 13  ──→  LED anode (+ 220Ω resistor to GND)
+Pin  3  ──→  Buzzer (+) terminal
+GND     ──→  Laser GND · LED GND · Buzzer GND
+5V      ──→  Laser VCC
+```
 
-**RX Arduino:**
-- Pin 2 → LDR output (via voltage divider / potentiometer)
-- Pin 13 → LED (with resistor)
-- Pin 3 → Buzzer
+**RX Arduino — Receiver Side**
+```
+Pin  2  ──→  LDR output (via potentiometer voltage divider)
+Pin 13  ──→  LED anode (+ 220Ω resistor to GND)
+Pin  3  ──→  Buzzer (+) terminal
+GND     ──→  LDR GND · LED GND · Buzzer GND
+5V      ──→  LDR VCC
+```
 
-### 5. Run the GUI
+### 5. Launch the GUI
 
 ```bash
-python laser_morse_hud.py
+python lumi_morse_hud.py
 ```
 
 ---
 
-## 🖱️ How to Use
+## <a id="how-to-use"></a>🚀 How to Use
 
-1. **Launch** the GUI — it will auto-detect available COM ports
-2. **Enter the API Key** in the sidebar field
-3. **Select the COM port** of your Arduino and click **CONNECT**
-4. Wait for the `LASER LINK READY` handshake in the log
-5. **TX Mode** → Click `TX MODE` or `SEND MESSAGE`, type your message, press `TRANSMIT` or `Ctrl+Enter`
-6. **RX Mode** → Click `RX MODE` or `START RX`, point the laser at the LDR and watch the message appear
-7. **Calibrate** → Click `CALIBRATE`, adjust the potentiometer until the LDR bar shows clean `0/1` transitions
+### Step 1 — Connect to Arduino
+- Launch the GUI — it auto-detects available COM ports
+- Enter your **API Key** in the sidebar field
+- Select the correct **COM port** and click **CONNECT**
+- Wait for `LASER LINK READY` in the system log — Arduino is online
+
+### Step 2 — Calibrate *(First time or new environment)*
+- Click **CALIBRATE**
+- The Arduino streams 40 live LDR readings to the GUI bar chart
+- Physically adjust the **potentiometer** until you see clean `0` (laser hits LDR) and `1` (no laser) transitions
+- Calibration ends automatically — UI returns to IDLE
+
+### Step 3 — Transmit a Message
+- Click **TX MODE** or **SEND MESSAGE**
+- The full-screen **TX Composer** opens — type your message
+- Watch the **live Morse preview** update character by character as you type
+- Press **▶ TRANSMIT** or `Ctrl+Enter` to send
+- The GUI animates the progress bar in sync with the laser timing locally
+
+### Step 4 — Receive a Message
+- On the receiver machine, click **RX MODE** or **START RX**
+- Point the laser at the LDR and start transmitting from the sender
+- Decoded characters appear live in the **big char display** and accumulate in the **message buffer**
+- Click **COPY** or **EXPORT MSG** to save the received message
 
 ---
 
-## 📂 Project Structure
+## <a id="gui-modes--themes"></a>🎨 GUI Modes & Themes
+
+| Mode | Accent Colour | Background Tint | Triggered By |
+|------|--------------|-----------------|--------------|
+| **IDLE** | `#38bdf8` Sky Blue | `#020810` Deep Black | Startup · after TX done · manual idle |
+| **TX** | `#f97316` Orange | `#0e0500` Ember Black | Sending message via laser |
+| **RX** | `#22d3ee` Cyan | `#00090e` Ocean Black | Listening for laser pulses |
+| **CAL** | `#a78bfa` Purple | `#080010` Void Black | LDR calibration routine |
+
+> Every mode switch triggers a **full UI colour overhaul** — banner, big char display, progress bar, oscilloscope waveform, and all sidebar buttons switch colour simultaneously.
+
+---
+
+## <a id="project-structure"></a>📁 Project Structure
 
 ```
 lumi-morse/
 │
-├── laser_morse_hud.py          # Python GUI (customtkinter)
-├── Secure_Beam_NAP__1_.ino     # Arduino firmware (TX + RX + CAL)
-└── README.md
+├── lumi_morse_hud.py            # Python GUI — full customtkinter HUD (single file)
+├── LUMI_MORSE_.ino       # Arduino firmware — TX · RX · CAL (single file)
+│
+├── assets/
+│   └── screenshots/              # README screenshots
+│       ├── hud_idle.png
+│       ├── hud_tx.png
+│       ├── hud_rx.png
+│       └── hud_cal.png
+│
+├── LICENSE                       # MIT License
+└── README.md                     # Project documentation
 ```
 
----
-
-## 🎨 GUI Modes & Colour Themes
-
-| Mode | Accent Colour | Description |
-|------|--------------|-------------|
-| IDLE | Sky Blue | System waiting, no active operation |
-| TX | Orange | Transmitting laser Morse code |
-| RX | Cyan | Receiving and decoding laser pulses |
-| CAL | Purple | LDR calibration with live bar chart |
+> Both the Python GUI and the Arduino firmware are fully **self-contained single files** — no sub-modules or external configs required.
 
 ---
 
-## 🛠️ Built With
+## <a id="known-issues--future-improvements"></a>🔮 Known Issues & Future Improvements
 
-| Technology | Purpose |
-|------------|---------|
-| `customtkinter` | Modern dark-themed GUI framework |
-| `pyserial` | Arduino serial communication |
-| `tkinter` | Canvas animations (oscilloscope, morse bar, hex rain) |
-| `threading` | Non-blocking serial read + TX animation |
-| `Arduino C++` | Morse encode/decode, laser control, LDR detection |
+### ⚠️ Known Limitations
 
----
+- Transmission range is limited by laser focus and ambient light conditions
+- LDR threshold requires manual potentiometer calibration per environment
+- One-way communication per session — TX and RX are separate modes
+- No error-correction or checksum on received messages
+- API key is currently hardcoded — not suitable for production deployment
 
-## 📸 Screenshots
+### 🛠️ Planned Improvements
 
-> *(Add your screenshots here)*
-
----
-
-## 🤝 Contributing
-
-Pull requests are welcome! For major changes, please open an issue first to discuss what you'd like to change.
+- [ ] Auto-calibration — no potentiometer adjustment needed
+- [ ] Wider character support — punctuation, special symbols
+- [ ] Message history log with timestamps
+- [ ] Wireless range extension with higher-powered laser module
+- [ ] Mobile companion app via Bluetooth serial bridge
 
 ---
 
-## 📄 License
+## <a id="license"></a>📄 License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the **MIT License**.
+See the [LICENSE](LICENSE) file for full details.
 
 ---
 
-## 👤 Author
+## <a id="author"></a>👤 Author
+
+<div align="center">
 
 **Niiranjan P**
 
-[![GitHub](https://img.shields.io/badge/GitHub-niiranjan--exe-181717?style=flat-square&logo=github)](https://github.com/niiranjan-exe)
+<br/>
+
+[![GitHub](https://img.shields.io/badge/GitHub-niiranjan--exe-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/niiranjan-exe)
+
+</div>
 
 ---
 
 <div align="center">
 
-*Built with 💡 light, ⚡ electricity, and a love for old-school communication.*
+```
+  ·  −  ·     ·  −−−  ·     ·  −−  ·     ·  ·     ·  −  ·
+        L  U  M  I  M  O  R  S  E
+```
+
+
+<br/>
+
+⭐ **If this project sparked something in you, drop a star!** ⭐
 
 </div>
