@@ -385,7 +385,6 @@ LumiMorse/
 │
 ├── assets/
 │   ├── demo/hud.png                    # Demo Screenshot files
-│   │   ├── Lumi_Morse_tx.mp4
 │   └── circuit.png               # Circuit layout 
 │
 ├── LICENSE                       # MIT License
