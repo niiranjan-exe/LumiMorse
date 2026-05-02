@@ -1,4 +1,8 @@
 <div align="center">
+⭐ If this project sparked something in you, drop a star! ⭐
+
+</div>
+<div align="center">
 
 
 ```
