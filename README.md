@@ -78,28 +78,12 @@ Key highlights from the codebase:
 
 ---
 
-## <a id="demo-videos"></a>🎬 Demo Videos
+## <a id="demo-videos"></a>📸 Screenshots
 
-### 📤 TX Mode — Transmitting a Message
-> Full orange accent theme. Type a message in the composer, press Transmit, and watch the laser fire Morse pulses with the GUI animating the progress bar in sync.
+### 🖥️ Main HUD — Home Screen
+> Scrolling hex-rain sidebar (left), live clock, session stats, oscilloscope panel, system log, and message buffer — all in the deep-space dark theme.
 
-https://github.com/niiranjan-exe/LumiMorse/assets/demo/Lumi_Morse_tx.mp4
-
----
-
-### 📥 RX Mode — Receiving a Message
-> Full cyan accent theme. The LDR picks up each laser pulse, the Arduino decodes dot/dash timing, and characters stream live into the GUI message buffer.
-
-https://github.com/niiranjan-exe/LumiMorse/assets/demo/Lumi_morse_rxt.mp4
-
----
-
-### ⚡ Full System — End-to-End Working Demo
-> Complete TX → Laser → LDR → RX pipeline. One Arduino fires, the other decodes, both GUIs update in real time.
-
-https://github.com/niiranjan-exe/LumiMorse/assets/demo/Lumi_Morse_working.mp4
-
----
+![Main HUD](assets/hud.png)
 
 ## <a id="block-diagram"></a>🔷 Block Diagram
 
