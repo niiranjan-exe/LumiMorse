@@ -83,21 +83,21 @@ Key highlights from the codebase:
 ### 📤 TX Mode — Transmitting a Message
 > Full orange accent theme. Type a message in the composer, press Transmit, and watch the laser fire Morse pulses with the GUI animating the progress bar in sync.
 
-https://github.com/niiranjan-exe/lumi-morse/assets/demo/Lumi_Morse_tx.mp4
+https://github.com/niiranjan-exe/LumiMorse/assets/demo/Lumi_Morse_tx.mp4
 
 ---
 
 ### 📥 RX Mode — Receiving a Message
 > Full cyan accent theme. The LDR picks up each laser pulse, the Arduino decodes dot/dash timing, and characters stream live into the GUI message buffer.
 
-https://github.com/niiranjan-exe/lumi-morse/assets/demo/Lumi_morse_rxt.mp4
+https://github.com/niiranjan-exe/LumiMorse/assets/demo/Lumi_morse_rxt.mp4
 
 ---
 
 ### ⚡ Full System — End-to-End Working Demo
 > Complete TX → Laser → LDR → RX pipeline. One Arduino fires, the other decodes, both GUIs update in real time.
 
-https://github.com/niiranjan-exe/lumi-morse/assets/demo/Lumi_Morse_working.mp4
+https://github.com/niiranjan-exe/LumiMorse/assets/demo/Lumi_Morse_working.mp4
 
 ---
 
@@ -304,8 +304,8 @@ pip install customtkinter pyserial
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/niiranjan-exe/lumi-morse.git
-cd lumi-morse
+git clone https://github.com/niiranjan-exe/LumiMorse.git
+cd LumiMorse
 ```
 
 ### 2. Install Python Dependencies
@@ -394,7 +394,7 @@ python lumi_morse_hud.py
 ## <a id="project-structure"></a>📁 Project Structure
 
 ```
-lumi-morse/
+LumiMorse/
 │
 ├── lumi_morse_hud.py            # Python GUI — full customtkinter HUD (single file)
 ├── lumi_morse_.ino       # Arduino firmware — TX · RX · CAL (single file)
