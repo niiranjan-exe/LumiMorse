@@ -83,7 +83,7 @@ Key highlights from the codebase:
 ### 🖥️ Main HUD — Home Screen
 > Scrolling hex-rain sidebar (left), live clock, session stats, oscilloscope panel, system log, and message buffer — all in the deep-space dark theme.
 
-![Main HUD](assets/hud.png)
+![Main HUD](assets/demo/hud.png)
 
 ## <a id="block-diagram"></a>🔷 Block Diagram
 
@@ -384,10 +384,8 @@ LumiMorse/
 ├── lumi_morse_.ino       # Arduino firmware — TX · RX · CAL (single file)
 │
 ├── assets/
-│   ├── demo/                     # Demo video files
+│   ├── demo/hud.png                    # Demo Screenshot files
 │   │   ├── Lumi_Morse_tx.mp4
-│   │   ├── Lumi_morse_rxt.mp4
-│   │   └── Lumi_Morse_working.mp4
 │   └── circuit.png               # Circuit layout 
 │
 ├── LICENSE                       # MIT License
@@ -410,9 +408,6 @@ LumiMorse/
 
 ### 🛠️ Planned Improvements
 
-- [ ] Full-duplex mode — both Arduinos TX and RX simultaneously
-- [ ] Error-correction layer (parity bit or repeat-confirm)
-- [ ] Encrypted message mode (XOR / Caesar cipher before encoding)
 - [ ] Auto-calibration — no potentiometer adjustment needed
 - [ ] Wider character support — punctuation, special symbols
 - [ ] Message history log with timestamps
