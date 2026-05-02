@@ -1,5 +1,5 @@
 <div align="center">
-⭐ If this project sparked something in you, drop a star!⭐
+
 
 ```
 ██╗      ██╗   ██╗███╗   ███╗██╗    ███╗   ███╗ ██████╗ ██████╗ ███████╗███████╗
@@ -34,11 +34,6 @@
 
 <br/>
 
-```
-[ SENDER GUI ]  ──── USB Serial ────  [ Arduino TX ]  ──── ·−·· ∿∿∿ ────  [ Arduino RX ]  ──── USB Serial ────  [ RECEIVER GUI ]
-   Type message                          Laser blinks                           LDR detects                          Text displayed
-```
-
 </div>
 
 ---
@@ -46,10 +41,12 @@
 ## 📡 Table of Contents
 
 - [About the Project](#-about-the-project)
-- [Screenshots](#-screenshots)
+- [Demo Videos](#-demo-videos)
+- [Block Diagram](#-block-diagram)
 - [Features](#-features)
 - [Hardware Requirements](#-hardware-requirements)
 - [Pin Configuration](#-pin-configuration)
+- [Circuit Connections](#-circuit-connections)
 - [Morse Timing Reference](#-morse-timing-reference)
 - [Serial Protocol](#-serial-protocol)
 - [Tech Stack](#-tech-stack)
@@ -66,39 +63,51 @@
 
 ## <a id="about-the-project"></a>🔭 About the Project
 
-**LumiMorse** (*Lumi* — Latin/Finnish for **light**) is a real-world wireless communication project built entirely on Arduino and Python. The sender side encodes a typed message into International Morse Code and transmits it as timed laser pulses. The receiver side listens via an LDR (Light Dependent Resistor), interprets the pulse durations, decodes each symbol back into text, and streams it live to a GUI.
+**LumiMorse** is a real-world wireless communication project built entirely on Arduino and Python. The sender side encodes a typed message into Morse Code and transmits it as timed laser pulses. The receiver side listens via an LDR (Light Dependent Resistor), interprets the pulse durations, decodes each light pulse back into text, and streams it live to a GUI.
 
 Key highlights from the codebase:
 
 - The **Python GUI** (`lumi_morse_hud.py`) is built with `customtkinter` and styled with a deep-space dark colour palette — featuring an animated oscilloscope, scrolling hex-rain sidebar, live Morse dot/dash visualiser, and per-mode full UI colour theme switching.
-- The **Arduino firmware** (`LUMI_MORSE_.ino`) handles Morse encoding + decoding, laser control, buzzer + LED feedback, a non-blocking LDR receive loop, and a live calibration routine — all over a simple serial command protocol.
+- The **Arduino firmware** (`lumi_morse_.ino`) handles Morse encoding + decoding, laser control, buzzer + LED feedback, a non-blocking LDR receive loop, and a live calibration routine — all over a simple serial command protocol.
 - A **TX Message Composer** dialog (full-screen, maximised) shows a live Morse preview and symbol count as you type.
 - A dedicated **LDR Calibration panel** renders a live bar chart of 0/1 sensor readings so you can physically align the laser to the LDR.
 
 ---
 
-## <a id="screenshots"></a>📸 Screenshots
+## <a id="demo-videos"></a>🎬 Demo Videos
 
-### 🖥️ Main HUD — System Idle
-> Scrolling hex-rain sidebar, live clock, session stats, oscilloscope panel, and message buffer.
+### 📤 TX Mode — Transmitting a Message
+> Full orange accent theme. Type a message in the composer, press Transmit, and watch the laser fire Morse pulses with the GUI animating the progress bar in sync.
 
-![Idle HUD](assets/screenshots/hud_idle.png)
+https://github.com/niiranjan-exe/lumi-morse/assets/demo/Lumi_Morse_tx.mp4
 
-### 📤 TX Mode — Transmitting
-> Full orange accent theme with Morse dot/dash visualiser, big character display, and real-time progress bar.
+---
 
-![TX Mode](assets/screenshots/hud_tx.png)
+### 📥 RX Mode — Receiving a Message
+> Full cyan accent theme. The LDR picks up each laser pulse, the Arduino decodes dot/dash timing, and characters stream live into the GUI message buffer.
 
-### 📥 RX Mode — Receiving
-> Full cyan accent theme with live character decode streaming into the message buffer.
+https://github.com/niiranjan-exe/lumi-morse/assets/demo/Lumi_morse_rxt.mp4
 
-![RX Mode](assets/screenshots/hud_rx.png)
+---
 
-### 🔧 Calibration Mode
-> Purple accent theme with live LDR bar chart showing LASER ON / LASER OFF readings.
+### ⚡ Full System — End-to-End Working Demo
+> Complete TX → Laser → LDR → RX pipeline. One Arduino fires, the other decodes, both GUIs update in real time.
 
-![CAL Mode](assets/screenshots/hud_cal.png)
+https://github.com/niiranjan-exe/lumi-morse/assets/demo/Lumi_Morse_working.mp4
 
+---
+
+## <a id="block-diagram"></a>🔷 Block Diagram
+
+```
+╔═══════════════╗         ╔══════════════════╗                      ╔══════════════════╗         ╔═══════════════╗
+║  SENDER GUI   ║         ║   Arduino  TX    ║                      ║   Arduino  RX    ║         ║ RECEIVER GUI  ║
+║               ║         ║                  ║   LASER  ·−·· ∿∿∿   ║                  ║         ║               ║
+║  Type message ║──Serial─▶  Encodes Morse   ║─────────────────────▶  LDR detects    ║──Serial─▶ Displays text ║
+║  customtkinter║  (USB)  ║  Fires laser     ║      optical beam    ║  Decodes timing  ║  (USB)  ║  customtkinter║
+║               ║         ║  LED + Buzzer    ║                      ║  LED + Buzzer    ║         ║               ║
+╚═══════════════╝         ╚══════════════════╝                      ╚══════════════════╝         ╚═══════════════╝
+```
 ---
 
 ## <a id="features"></a>✨ Features
@@ -121,7 +130,7 @@ Key highlights from the codebase:
 | 12 | **API Key Auth** | Connection to Arduino is gated behind an API key entry field |
 | 13 | **Port Refresh** | Rescan and refresh available COM ports at runtime with one click |
 
-### ⚡ Arduino Firmware — `LUMI_MORSE_.ino`
+### ⚡ Arduino Firmware — `lumi_morse_.ino`
 
 | # | Feature | Description |
 |---|---------|-------------|
@@ -140,11 +149,11 @@ Key highlights from the codebase:
 | Component | Qty | Notes |
 |-----------|-----|-------|
 | Arduino Uno / Nano | 2 | One for TX side, one for RX side |
-| Laser Module (5V) | 1 | KY-008 or equivalent |
+| Laser Module (5V) | 1 | HW-493 or equivalent |
 | LDR Sensor | 1 | With 10kΩ pull-down resistor |
 | Potentiometer | 1 | For adjusting LDR detection threshold |
-| LED (any colour) | 1 | Visual status indicator per pulse |
 | Active Buzzer | 1 | Audio feedback per dot/dash |
+| LED (any colour) | 2 | One per Arduino — visual status indicator per pulse |
 | Jumper Wires | — | As needed |
 | USB Cables | 2 | One per Arduino (serial + power) |
 
@@ -159,9 +168,58 @@ Key highlights from the codebase:
 
 #define LASER_PIN   9    // OUTPUT — Laser module signal pin
 #define LDR_PIN     2    // INPUT  — LDR digital read
+#define BUZZER_PIN  3    // OUTPUT — Buzzer audio feedback per pulse
 #define LED_PIN     13   // OUTPUT — Status LED per pulse
-#define BUZZER_PIN  3    // OUTPUT — Buzzer audio feedback
 ```
+
+---
+
+## <a id="circuit-connections"></a>🔌 Circuit Connections
+
+![Simple Wiring Layout](assets/wiring_layout.png)
+
+### TX Side — Sender Arduino
+
+```
+Laser S   →  D9
+Laser +   →  5V
+Laser -   →  GND
+
+Buzzer +  →  D3
+Buzzer -  →  GND
+
+LED +     →  D13
+LED -     →  GND
+```
+
+### RX Side — Receiver Arduino
+
+```
+LDR VCC   →  5V
+LDR GND   →  GND
+LDR D0    →  D2
+
+Buzzer +  →  D3
+Buzzer -  →  GND
+
+LED +     →  D13
+LED -     →  GND
+```
+
+### Full Connection Reference Table
+
+| Component | Pin | Arduino Side | Direction | Notes |
+|-----------|-----|-------------|-----------|-------|
+| Laser Signal | D9 | TX | OUTPUT | HW-493 signal pin |
+| Laser VCC | 5V | TX | POWER | |
+| Laser GND | GND | TX | POWER | |
+| LDR VCC | 5V | RX | POWER | |
+| LDR GND | GND | RX | POWER | |
+| LDR D0 | D2 | RX | INPUT | Via potentiometer voltage divider |
+| Buzzer (+) | D3 | TX + RX | OUTPUT | Active buzzer, audio feedback per pulse |
+| Buzzer (−) | GND | TX + RX | POWER | |
+| LED Anode | D13 | TX + RX | OUTPUT | With 220Ω resistor in series |
+| LED Cathode | GND | TX + RX | POWER | |
 
 ---
 
@@ -216,7 +274,7 @@ LumiMorse uses plain-text newline-terminated commands over serial at **9600 baud
 | **pyserial** | Arduino serial communication bridge |
 | **threading** | Non-blocking serial reader + TX progress animation in parallel |
 | **queue** | Thread-safe message passing from serial thread to GUI thread |
-| **Arduino C++** | Morse encode/decode, laser TX, LDR RX, calibration firmware |
+| **Arduino C++** | Morse encode/decode, laser TX, LDR RX, buzzer, calibration firmware |
 
 ---
 
@@ -254,7 +312,7 @@ pip install customtkinter pyserial
 
 ### 3. Flash the Arduino Firmware
 
-1. Open `LUMI_MORSE_.ino` in the **Arduino IDE**
+1. Open `lumi_morse_.ino` in the **Arduino IDE**
 2. Select your board (`Uno` / `Nano`) under `Tools → Board`
 3. Select the correct COM port under `Tools → Port`
 4. Click **Upload** — repeat for **both** Arduinos (same firmware for TX and RX)
@@ -264,18 +322,18 @@ pip install customtkinter pyserial
 **TX Arduino — Sender Side**
 ```
 Pin  9  ──→  Laser module signal pin
-Pin 13  ──→  LED anode (+ 220Ω resistor to GND)
 Pin  3  ──→  Buzzer (+) terminal
-GND     ──→  Laser GND · LED GND · Buzzer GND
+Pin 13  ──→  LED anode (+ 220Ω resistor to GND)
+GND     ──→  Laser GND · Buzzer GND · LED GND
 5V      ──→  Laser VCC
 ```
 
 **RX Arduino — Receiver Side**
 ```
-Pin  2  ──→  LDR output (via potentiometer voltage divider)
-Pin 13  ──→  LED anode (+ 220Ω resistor to GND)
+Pin  2  ──→  LDR D0 output (via potentiometer voltage divider)
 Pin  3  ──→  Buzzer (+) terminal
-GND     ──→  LDR GND · LED GND · Buzzer GND
+Pin 13  ──→  LED anode (+ 220Ω resistor to GND)
+GND     ──→  LDR GND · Buzzer GND · LED GND
 5V      ──→  LDR VCC
 ```
 
@@ -335,14 +393,14 @@ python lumi_morse_hud.py
 lumi-morse/
 │
 ├── lumi_morse_hud.py            # Python GUI — full customtkinter HUD (single file)
-├── LUMI_MORSE_.ino       # Arduino firmware — TX · RX · CAL (single file)
+├── lumi_morse_.ino       # Arduino firmware — TX · RX · CAL (single file)
 │
 ├── assets/
-│   └── screenshots/              # README screenshots
-│       ├── hud_idle.png
-│       ├── hud_tx.png
-│       ├── hud_rx.png
-│       └── hud_cal.png
+│   ├── demo/                     # Demo video files
+│   │   ├── Lumi_Morse_tx.mp4
+│   │   ├── Lumi_morse_rxt.mp4
+│   │   └── Lumi_Morse_working.mp4
+│   └── wiring_layout.png         # Simple wiring layout screenshot
 │
 ├── LICENSE                       # MIT License
 └── README.md                     # Project documentation
@@ -364,6 +422,9 @@ lumi-morse/
 
 ### 🛠️ Planned Improvements
 
+- [ ] Full-duplex mode — both Arduinos TX and RX simultaneously
+- [ ] Error-correction layer (parity bit or repeat-confirm)
+- [ ] Encrypted message mode (XOR / Caesar cipher before encoding)
 - [ ] Auto-calibration — no potentiometer adjustment needed
 - [ ] Wider character support — punctuation, special symbols
 - [ ] Message history log with timestamps
@@ -399,7 +460,6 @@ See the [LICENSE](LICENSE) file for full details.
   ·  −  ·     ·  −−−  ·     ·  −−  ·     ·  ·     ·  −  ·
         L  U  M  I  M  O  R  S  E
 ```
-
 
 <br/>
 
