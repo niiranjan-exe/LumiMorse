@@ -45,7 +45,7 @@
 ## 📡 Table of Contents
 
 - [About the Project](#-about-the-project)
-- [Demo Videos](#-demo-videos)
+- [Screenshots](#-screenshots)
 - [Block Diagram](#-block-diagram)
 - [Features](#-features)
 - [Hardware Requirements](#-hardware-requirements)
