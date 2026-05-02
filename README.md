@@ -180,7 +180,7 @@ https://github.com/niiranjan-exe/lumi-morse/assets/demo/Lumi_Morse_working.mp4
 
 ## <a id="circuit-connections"></a>🔌 Circuit Connections
 
-![Simple Wiring Layout](assets/wiring_layout.png)
+![Circuit Diagram](assets/circuit.png)
 
 ### TX Side — Sender Arduino
 
@@ -404,7 +404,7 @@ lumi-morse/
 │   │   ├── Lumi_Morse_tx.mp4
 │   │   ├── Lumi_morse_rxt.mp4
 │   │   └── Lumi_Morse_working.mp4
-│   └── wiring_layout.png         # Simple wiring layout screenshot
+│   └── circuit.png               # Circuit layout 
 │
 ├── LICENSE                       # MIT License
 └── README.md                     # Project documentation
